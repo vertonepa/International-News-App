@@ -7,6 +7,6 @@ data class MostPopularModel(
     val webUrl: String = "",
     val section: String,
     val title: String,
-    val publishedDate: LocalDate,
+    val publishedDate: String,
     val pic: String?
 )

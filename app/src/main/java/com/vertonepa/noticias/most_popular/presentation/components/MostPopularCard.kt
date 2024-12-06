@@ -27,13 +27,14 @@ import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
 import com.vertonepa.noticias.core.presentation.ShimmerEffect
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MostPopularCard(
     modifier: Modifier = Modifier,
     title: String,
     section: String,
-    date: LocalDate,
+    date: String,
     imgUrl: String,
     webUrl: String
 ) {
@@ -74,7 +75,7 @@ fun MostPopularCard(
                 Row {
                     Text(text = section)
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = date.toString())
+                    Text(text = date)
                 }
 
                 Text(text = title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -90,7 +91,7 @@ private fun Preview() {
     MostPopularCard(
         title = "Titulo 1",
         section = "Section",
-        date = LocalDate.now(),
+        date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
         imgUrl = "https://loremflickr.com/320/240",
         webUrl = ""
     )

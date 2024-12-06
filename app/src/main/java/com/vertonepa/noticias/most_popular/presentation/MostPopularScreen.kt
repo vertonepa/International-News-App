@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.vertonepa.noticias.most_popular.domain.models.MostPopularModel
 import com.vertonepa.noticias.most_popular.presentation.components.MostPopularCard
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MostPopularScreen(viewModel: MostPopularViewModel = hiltViewModel()) {
@@ -24,7 +25,7 @@ fun MostPopularScreen(viewModel: MostPopularViewModel = hiltViewModel()) {
 
 @Composable
 fun MostPopularScreen(state: MostPopularState) {
-    val mostShared = state.sharedNews
+    val mostShared = state.articlesList
 
     Scaffold(Modifier.fillMaxSize()) { scaffoldPadding ->
         scaffoldPadding.calculateTopPadding()
@@ -53,7 +54,7 @@ fun MostPopularScreen(state: MostPopularState) {
 private fun Preview() {
     val title = "TITLE!!"
     val section = "Section"
-    val currentDate = LocalDate.now()
+    val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
     val img = "https://via.placeholder.com/150"
 
     MostPopularScreen(
