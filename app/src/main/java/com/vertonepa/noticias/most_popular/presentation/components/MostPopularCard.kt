@@ -26,29 +26,26 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
 import com.vertonepa.noticias.core.presentation.ShimmerEffect
+import com.vertonepa.noticias.most_popular.domain.models.MostPopularModel
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MostPopularCard(
     modifier: Modifier = Modifier,
-    title: String,
-    section: String,
-    date: LocalDate,
-    imgUrl: String,
-    webUrl: String
+    article: MostPopularModel
 ) {
     val context = LocalContext.current
     Card(
         modifier = modifier,
         shape = RectangleShape,
-        border = BorderStroke(color = Color.Black, width = 1.dp),
         onClick = {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.webUrl))
             context.startActivity(intent)
         }
     ) {
         Row(modifier = Modifier.padding(4.dp)) {
-            SubcomposeAsyncImage(model = imgUrl,
+            SubcomposeAsyncImage(model = article.imgUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(75.dp)
@@ -63,7 +60,7 @@ fun MostPopularCard(
                 },
                 success = {
                     AsyncImage(
-                        model = imgUrl,
+                        model = article.imgUrl,
                         contentDescription = null
                     )
                 }
@@ -72,12 +69,12 @@ fun MostPopularCard(
             Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Row {
-                    Text(text = section)
+                    Text(text = article.section)
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = date.toString())
+                    Text(text = article.publishedDate)
                 }
 
-                Text(text = title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(text = article.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
         }
     }
@@ -88,10 +85,11 @@ fun MostPopularCard(
 @Composable
 private fun Preview() {
     MostPopularCard(
-        title = "Titulo 1",
-        section = "Section",
-        date = LocalDate.now(),
-        imgUrl = "https://loremflickr.com/320/240",
-        webUrl = ""
-    )
+        article = MostPopularModel(
+            title = "Título 1",
+            section = "Section",
+            publishedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
+            imgUrl = ""
+            )
+        )
 }
