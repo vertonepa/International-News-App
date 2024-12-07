@@ -13,6 +13,6 @@ fun MostPopularDto.toDomain(): MostPopularModel {
         title = this.title,
         section = this.section,
         publishedDate = LocalDate.parse(this.publishedDate).format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
-        pic = this.media.firstOrNull()?.mediaMetadata?.firstOrNull()?.url
+        imgUrl = this.media.firstOrNull()?.mediaMetadata?.firstOrNull()?.url
     )
 }

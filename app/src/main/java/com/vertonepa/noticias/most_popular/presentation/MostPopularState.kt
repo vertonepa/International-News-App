@@ -4,5 +4,6 @@ import com.vertonepa.noticias.most_popular.domain.models.MostPopularModel
 
 data class MostPopularState(
     val articlesList: List<MostPopularModel> = emptyList(),
-    val currentCategory: String = "shared"
+    val categories: List<String> = listOf("shared", "viewed", "emailed"),
+    val category: String = "shared"
 )
