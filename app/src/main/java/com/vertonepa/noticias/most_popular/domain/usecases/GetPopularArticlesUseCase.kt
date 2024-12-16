@@ -10,8 +10,8 @@ import javax.inject.Inject
 class GetPopularArticlesUseCase @Inject constructor(
     private val repository: MostPopularRepository
 ) {
-    operator fun invoke(category: String): PopularArticles =
-        repository.getPopularArticles(category).map { articles ->
+    operator fun invoke(byTrending: String): PopularArticles =
+        repository.getPopularArticles(byTrending).map { articles ->
             withContext(Dispatchers.Default) {
                 articles.sortedByDescending { it.publishedDate }
             }

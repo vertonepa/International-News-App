@@ -20,12 +20,12 @@ class MostPopularViewModel @Inject constructor(
         private set
 
     init {
-        getMostPopularArticles(category = state.category)
+        getMostPopularArticles(byTrending = state.selectedTrending.lowercase())
     }
 
-    private fun getMostPopularArticles(category: String) {
+    private fun getMostPopularArticles(byTrending: String) {
         viewModelScope.launch {
-            getPopularArticlesUseCase(category).collectLatest {
+            getPopularArticlesUseCase(byTrending).collectLatest {
                 state = state.copy(articlesList = it)
             }
         }
@@ -34,8 +34,8 @@ class MostPopularViewModel @Inject constructor(
     fun onEvent(event: MostPopularEvent) {
         when(event) {
             is MostPopularEvent.OnCategoryChanged -> {
-                state = state.copy(category = event.category)
-                getMostPopularArticles(category = state.category)
+                state = state.copy(selectedTrending = event.trending)
+                getMostPopularArticles(byTrending = state.selectedTrending)
             }
         }
     }

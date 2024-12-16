@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.vertonepa.noticias.most_popular.domain.models.MostPopularModel
-import com.vertonepa.noticias.most_popular.presentation.components.CategoriesTabRow
+import com.vertonepa.noticias.most_popular.presentation.components.TrendingTabRow
 import com.vertonepa.noticias.most_popular.presentation.components.MostPopularCard
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -34,18 +34,18 @@ fun MostPopularScreen(viewModel: MostPopularViewModel = hiltViewModel()) {
 
 @Composable
 fun MostPopularScreen(state: MostPopularState, onEvent: (MostPopularEvent) -> Unit) {
-    val pagerState = rememberPagerState { state.categories.size }
+    val pagerState = rememberPagerState { state.trending.size }
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
-            onEvent(MostPopularEvent.OnCategoryChanged(category = state.categories[page]))
+            onEvent(MostPopularEvent.OnCategoryChanged(trending = state.trending[page]))
         }
     }
 
     Scaffold(Modifier.fillMaxSize()) { scaffoldPadding ->
         Column(modifier = Modifier.padding(scaffoldPadding)) {
-            CategoriesTabRow(pagerState = pagerState, categories = state.categories) { index ->
+            TrendingTabRow(pagerState = pagerState, trendings = state.trending) { index ->
                 coroutineScope.launch { pagerState.animateScrollToPage(index) }
             }
             HorizontalPager(state = pagerState) {

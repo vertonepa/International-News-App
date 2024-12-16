@@ -10,8 +10,8 @@ import javax.inject.Inject
 class MostPopularRepositoryImpl @Inject constructor(
     private val mostPopularProvider: MostPopularProvider
 ) : MostPopularRepository {
-    override fun getPopularArticles(byCategory: String): PopularArticles = flow {
-        val response = mostPopularProvider.mostPopularLastSevenDays(byCategory).results.map { it.toDomain() }
+    override fun getPopularArticles(byTrending: String): PopularArticles = flow {
+        val response = mostPopularProvider.mostPopularLastSevenDays(byTrending).results.map { it.toDomain() }
         emit(response)
     }.onStart {
         emit(emptyList())

@@ -12,18 +12,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CategoriesTabRow(
+fun TrendingTabRow(
     pagerState: PagerState,
-    categories: List<String>,
+    trendings: List<String>,
     onTabSelected: (Int) -> Unit
 ) {
-    ScrollableTabRow(selectedTabIndex = pagerState.currentPage, edgePadding = 0.dp) {
-        categories.forEachIndexed { index, category ->
+    ScrollableTabRow(selectedTabIndex = pagerState.currentPage) {
+        trendings.forEachIndexed { index, trend ->
             Tab(
                 selected = pagerState.currentPage == index,
                 onClick = { onTabSelected(index) },
             ) {
-                Text(text = category, modifier = Modifier.padding(vertical = 8.dp))
+                Text(text = trend, modifier = Modifier.padding(vertical = 8.dp))
             }
         }
     }
@@ -34,5 +34,5 @@ fun CategoriesTabRow(
 private fun Preview() {
     val pagerState = rememberPagerState { 3 }
     val list = listOf("shared", "viewed", "emailed")
-    CategoriesTabRow(pagerState = pagerState, categories = list) { list.size }
+    TrendingTabRow(pagerState = pagerState, trendings = list) { list.size }
 }
